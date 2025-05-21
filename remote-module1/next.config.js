@@ -4,7 +4,7 @@ const federatedConfig = {
   name: "remote",
   filename: "static/chunks/remoteEntry.js",
   exposes: {
-    "./Home": "./src/components/home.tsx",
+    "./RemoteNext": "./src/components/Robot.tsx",
   },
   shared: {},
 };

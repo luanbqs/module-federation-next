@@ -8,9 +8,18 @@ const nextConfig = {
   },
   webpack(config, options) {
     const { isServer } = options;
+ 
     const remotes = {
-      remote: `remote@http://localhost:3001/_next/static/${isServer ? 'ssr' : 'chunks'}/remoteEntry.js`,
+      remoteNext: `remote@http://localhost:3001/_next/static/chunks/remoteEntry.js`,
+      remoteVite: `remoteVite@http://localhost:3004/assets/viteRemoteEntry.js`, // ou ajuste conforme o path do output do Vite
     };
+
+    const remoteTypes = {
+      remoteNext: `remoteNext@http://localhost:3001/_next/static/${
+        isServer ? 'ssr' : 'chunks'
+      }/remoteEntry.js`
+    };
+    
     const federatedConfig = {
       name: "host",
       remotes: remotes,
@@ -19,7 +28,7 @@ const nextConfig = {
     };
     config.plugins.push(
       new NextFederationPlugin(federatedConfig),
-      new FederatedTypesPlugin({ federationConfig: federatedConfig })
+      new FederatedTypesPlugin({ federationConfig: remoteTypes})
     );
     return config;
   },
